@@ -1,0 +1,9 @@
+Car-Caddy-backend/target/
+Car-Caddy-frontend/target/
+.idea
+*.iws
+*.iml
+*.ipr
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
