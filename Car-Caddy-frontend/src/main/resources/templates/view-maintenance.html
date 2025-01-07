@@ -1,0 +1,42 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Maintenance Records</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<header>
+    <h1>All Maintenance Records</h1>
+</header>
+
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Car ID</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Loop through the records passed from the controller -->
+    <tr th:each="record : ${records}">
+        <td th:text="${record.maintenance_Id}"></td> <!-- Corrected to match 'maintenance_Id' from the model -->
+        <td th:text="${record.car_id}"></td> <!-- Corrected to match 'car_id' from the model -->
+        <td th:text="${record.description}"></td>
+        <td th:text="${#dates.format(record.maintenance_date, 'yyyy-MM-dd')}"></td>
+        <!-- Corrected 'maintenance_date' -->
+        <td th:text="${record.maintenanceType}"></td>
+        <td th:text="${record.maintenanceStatus}"></td> <!-- Corrected 'maintenanceStatus' -->
+        <td>
+            <!-- Delete Button -->
+            <a class="btn btn-danger" th:href="@{/maintenance/delete/{id}(id=${record.maintenance_Id})}">Delete</a>
+            <a class="btn btn-primary" th:href="@{/maintenance/edit/{id}(id=${record.maintenance_Id})}">Edit</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
