@@ -9,7 +9,6 @@
     <h1>All Maintenance Records</h1>
 </header>
 
-
 <table border="1">
     <thead>
     <tr>
@@ -22,31 +21,28 @@
     </tr>
     </thead>
     <tbody>
-<!--    <h1 th:text="${record.getCarId()}"></h1>-->
-    <!-- Loop through the records passed from the controller -->
     <tr th:each="record : ${records}">
-        <td th:text="${record.maintenanceId}"></td> <!-- Corrected to match 'maintenance_Id' from the model -->
-        <td th:text="${record.carId}"></td> <!-- Corrected to match 'car_id' from the model -->
+        <td th:text="${record.maintenanceId}"></td>
+        <td th:text="${record.carId}"></td>
         <td th:text="${record.description}"></td>
-        <td th:text="${#dates.format(record.maintenance_date, 'yyyy-MM-dd')}"></td> <!-- Corrected 'maintenance_date' -->
+        <td th:text="${#dates.format(record.maintenance_date, 'yyyy-MM-dd')}"></td>
         <td th:text="${record.maintenanceType}"></td>
-        <td th:text="${record.maintenanceStatus}"></td> <!-- Corrected 'maintenanceStatus' -->
+        <td th:text="${record.maintenanceStatus}"></td>
         <td>
+            <!-- Edit Button -->
+            <a class="btn btn-primary" th:href="@{/maintenance/edit/{id}(id=${record.maintenanceId})}">Edit</a>
+        </td>
         <td>
-               <!-- Edit Button -->
-               <a th:href="@{/maintenance/edit/{id}(id=${record.maintenanceId})}" class="btn btn-primary">Edit</a>
-
-               <!-- Delete Button -->
-               <button onclick="deleteRecord([[${record.maintenanceId}]])" class="btn btn-danger">Delete</button>
-           </td>
+            <!-- Delete Form -->
+            <div class="btn-sm">
+                <form method="post" style="display:inline;"
+                      th:action="@{/delete/{id}(id=${record.maintenanceId})}">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </div>
         </td>
     </tr>
     </tbody>
 </table>
-<script>
-    function deleteRecord(id) {
-        console.log(id);
-    }
-</script>
 </body>
 </html>

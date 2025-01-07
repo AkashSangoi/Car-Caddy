@@ -38,11 +38,12 @@ public class MaintananceService {
         return maintainance.orElseThrow(() -> new InvalidEntityException("Maintenance record with ID " + id + " not found."));
     }
 
-    public void deleteMaintenance(Integer id) {
+    public boolean deleteMaintenance(Integer id) {
         if (!maintananceRepository.existsById(id)) {
-            throw new InvalidEntityException("Cannot delete record. Maintenance ID " + id + " not found.");
+            return false;
         }
         maintananceRepository.deleteById(id); // Deletes the maintenance record by Id
+        return true;
     }
 
     public void updateMaintenance(Maintainance record) {

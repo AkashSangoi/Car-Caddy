@@ -18,32 +18,38 @@
 <header>
     <h1>Create Maintenance Record</h1>
 </header>
-<form th:action="@{/maintenance}" th:object="${record}" method="post">
-    <label for="car_id">Car ID:</label>
-    <input type="number" id="car_id" th:field="*{carId}" ><br>
-    <div th:if="${#fields.hasErrors('car_id')}" th:errors="*{carId}" class="error"></div>
-    <!--    <label for="maintenance_date">Maintenance Date:</label>-->
-    <!--    <input type="date" id="maintenance_date" th:field="*{maintenance_date}" required><br>-->
+<form method="post" th:action="@{/register}" th:object="${maintainance}">
+    <label for="carId">Car ID:</label>
+    <input id="carId" th:field="*{carId}" type="number">
+    <!-- Error message for Car ID -->
+    <div class="error" th:if="${carIdError}" th:text="${carIdError}"></div>
+    <br>
 
     <label for="description">Description:</label>
-    <textarea id="description" th:field="*{description}" required></textarea><br>
-    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></div>
+    <textarea id="description" required th:field="*{description}"></textarea>
+    <!-- Error message for Description -->
+    <div class="error" th:if="${DescriptionError}" th:text="${DescriptionError}"></div>
+    <br>
 
     <label for="maintenanceType">Maintenance Type:</label>
-    <input type="text" id="maintenanceType" th:field="*{maintenanceType}" required><br>
-    <div th:if="${#fields.hasErrors('maintenanceType')}" th:errors="*{maintenanceType}" class="error"></div>
+    <input id="maintenanceType" required th:field="*{maintenanceType}" type="text">
+    <!-- Error message for Maintenance Type -->
+    <div class="error" th:if="${typeError}" th:text="${typeError}"></div>
+    <br>
+
+    <label for="maintenanceCost">Maintenance Cost:</label>
+    <input id="maintenanceCost" name="maintenanceCost" required type="number">
+    <!-- No error message logic provided in your code for this -->
+    <br>
 
     <label for="maintenanceStatus">Maintenance Status:</label>
-    <input type="text" id="maintenanceStatus" th:field="*{maintenanceStatus}" required><br>
-    <div th:if="${#fields.hasErrors('maintenanceStatus')}" th:errors="*{maintenanceStatus}" class="error"></div>
+    <input id="maintenanceStatus" required th:field="*{maintenanceStatus}" type="text">
+    <!-- Error message for Maintenance Status -->
+    <div class="error" th:if="${statusError}" th:text="${statusError}"></div>
+    <br>
 
-    <button type="submit">Submit</button>
-    <div th:if="${successMessage}" class="success">
-        <h6 th:text="${successMessage}"></h6>
-    </div>
-    <div th:if="${errorMessage}" class="error">
-        <h6 th:text="${errorMessage}"></h6>
-    </div>
+    <input type="submit" value="Register"/>
 </form>
+
 </body>
 </html>

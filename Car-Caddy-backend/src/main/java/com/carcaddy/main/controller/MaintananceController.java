@@ -3,7 +3,6 @@ package com.carcaddy.main.controller;
 import com.carcaddy.main.exception.InvalidEntityException;
 import com.carcaddy.main.model.Maintainance;
 import com.carcaddy.main.services.MaintananceService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +21,20 @@ public class MaintananceController {
         return maintananceService.getAllMaintenance();
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> saveMaintenanceRecord(@Valid @RequestBody Maintainance record) {
+    @GetMapping("/data/{id}")
+    public ResponseEntity<?> getRecordById(@PathVariable Integer id) {
         try {
+            Maintainance maintainance = maintananceService.getById(id);
+            return new ResponseEntity<>(maintainance, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> saveMaintenanceRecord(@RequestBody Maintainance record) {
+        try {
+            System.out.println(record.toString());
             // Check for existing record
             boolean isDuplicate = maintananceService.isDuplicateMaintenance(record);
             if (isDuplicate) {
@@ -43,18 +53,23 @@ public class MaintananceController {
     @PostMapping("/edit/{id}")
     public ResponseEntity<?> updateMaintenanceRecord(@PathVariable("id") Integer id, @RequestBody Maintainance record) {
         try {
-            System.out.println(id);
-            System.out.println(record);
+            if(id==null){
+                return new ResponseEntity<>("maintainence id is necessary",HttpStatus.NOT_FOUND);
+            }
+            record.setMaintenanceId(id);
             maintananceService.updateMaintenance(record);
             return new ResponseEntity<>("Records updated", HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>("Error while updating record", HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/delete/{id}")
     public ResponseEntity<?> deleteMaintenanceRecord(@PathVariable("id") Integer id) {
-        maintananceService.deleteMaintenance(id); // Call the service to delete the record
-        return new ResponseEntity<>("Record deleted", HttpStatus.OK);
+        if (maintananceService.deleteMaintenance(id)) {
+            return new ResponseEntity<>("Record deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Record Not found", HttpStatus.NOT_FOUND);
     }
 }

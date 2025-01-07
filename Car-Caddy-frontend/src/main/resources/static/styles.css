@@ -57,3 +57,8 @@ form input, form textarea, form button {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+.btn-sm {
+    font-size: 12px;
+    border-radius: 3px; /* Optional: Adjust border radius if needed */
+}
