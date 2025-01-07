@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Maintenance Record</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .success {
+            color: green;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Create Maintenance Record</h1>
+</header>
+<form th:action="@{/maintenance}" th:object="${record}" method="post">
+    <label for="car_id">Car ID:</label>
+    <input type="number" id="car_id" th:field="*{carId}" ><br>
+    <div th:if="${#fields.hasErrors('car_id')}" th:errors="*{carId}" class="error"></div>
+    <!--    <label for="maintenance_date">Maintenance Date:</label>-->
+    <!--    <input type="date" id="maintenance_date" th:field="*{maintenance_date}" required><br>-->
+
+    <label for="description">Description:</label>
+    <textarea id="description" th:field="*{description}" required></textarea><br>
+    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></div>
+
+    <label for="maintenanceType">Maintenance Type:</label>
+    <input type="text" id="maintenanceType" th:field="*{maintenanceType}" required><br>
+    <div th:if="${#fields.hasErrors('maintenanceType')}" th:errors="*{maintenanceType}" class="error"></div>
+
+    <label for="maintenanceStatus">Maintenance Status:</label>
+    <input type="text" id="maintenanceStatus" th:field="*{maintenanceStatus}" required><br>
+    <div th:if="${#fields.hasErrors('maintenanceStatus')}" th:errors="*{maintenanceStatus}" class="error"></div>
+
+    <button type="submit">Submit</button>
+    <div th:if="${successMessage}" class="success">
+        <h6 th:text="${successMessage}"></h6>
+    </div>
+    <div th:if="${errorMessage}" class="error">
+        <h6 th:text="${errorMessage}"></h6>
+    </div>
+</form>
+</body>
+</html>

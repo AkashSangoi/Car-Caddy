@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Maintenance Record</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<header>
+    <h1>Edit Maintenance Record</h1>
+</header>
+<form method="post" th:action="@{/maintenance/edit/{id}(id=${record.maintenanceId})}" th:object="${record}">
+    <div>
+        <label for="carId">Car ID:</label>
+        <input id="carId" required th:field="*{carId}" type="number">
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" required th:field="*{description}"></textarea>
+    </div>
+    <div>
+        <label for="maintenanceType">Type:</label>
+        <input id="maintenanceType" required th:field="*{maintenanceType}" type="text">
+    </div>
+    <div>
+        <label for="maintenanceStatus">Status:</label>
+        <input id="maintenanceStatus" required th:field="*{maintenanceStatus}" type="text">
+    </div>
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>
